@@ -2,7 +2,12 @@
 全文索引有什么用
 什么是cas
 volatile的特性，实现原理
-
+什么是偏向锁  
+synchronized锁对象、方法、代码块底层实现 
+ReentantLock和synchronized的对比      
+concurrentHashMap的size是如何实现的  
+ScheduledThreadPoolExecutor的特性  
+sleep和wait的区别  
 
 
 前言:
