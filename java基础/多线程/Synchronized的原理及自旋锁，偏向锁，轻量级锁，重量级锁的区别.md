@@ -37,7 +37,7 @@ markword数据的长度在32位和64位的虚拟机（未开启压缩指针）�
 
 32位虚拟机在不同状态下markword结构如下图所示：
 
-![](https://img-blog.csdn.net/20170419215511634?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvenF6X3pxeg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](../../img/20170419215511634.jpg)
 
 了解了markword结构，有助于后面了解java锁的加锁解锁过程；
 
@@ -91,7 +91,7 @@ Java偏向锁(Biased Locking)是Java6引入的一项多线程优化。 
 
 CAS为什么会引入本地延迟？这要从SMP（对称多处理器）架构说起，下图大概表明了SMP的结构：
 
-![](http://hi.csdn.net/attachment/201107/28/411087_1311836022idIz.jpg)
+![](../../img/411087_1311836022idIz.jpg)
 
 其意思是所有的CPU会共享一条系统总线（BUS），靠此总线连接主存。每个核都有自己的一级缓存，各核相对于BUS对称分布，因此这种结构称为“对称多处理器”。
 
@@ -209,14 +209,14 @@ Synchronized的作用
 它可以把任意一个非NULL的对象当作锁。
 
 1.  作用于方法时，锁住的是对象的实例(this)；
-2.  当作用于静态方法时，锁住的是Class实例，又因为Class的相关数据存储在永久带PermGen（jdk1.8则是metaspace），永久带是全局共享的，因此静态方法锁相当于类的一个全局锁，会锁所有调用该方法的线程；
+2.  当作用于静态方法时，锁住的是Class实例，又因为Class的相关数据存储在永久代PermGen（jdk1.8则是metaspace），永久代是全局共享的，因此静态方法锁相当于类的一个全局锁，会锁所有调用该方法的线程；
 3.  synchronized作用于一个对象实例时，锁住的是所有以该对象为锁的代码块。
 
 Synchronized的实现
 
 实现如下图所示；
 
-![](https://img-blog.csdn.net/20170418221917277?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvenF6X3pxeg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](https://img-blog.csdn.net/20170418221917277)
 
 它有多个队列，当多个线程一起访问某个对象监视器的时候，对象监视器会将这些线程存储在不同的容器中。
 
@@ -224,7 +224,7 @@ Synchronized的实现
     
 2.  Entry List：Contention List中那些有资格成为候选资源的线程被移动到Entry List中；
     
-3.  Wait Set：哪些调用wait方法被阻塞的线程被放置在这里；
+3.  Wait Set：那些调用wait方法被阻塞的线程被放置在这里；
     
 4.  OnDeck：任意时刻，最多只有一个线程正在竞争锁资源，该线程被成为OnDeck；
     
@@ -264,7 +264,7 @@ OnDeck线程获取到锁资源后会变为Owner线程，而没有得到锁资源
 减少锁的粒度
 ------
 
-**它的思想是将物理上的一个锁，拆成逻辑上的多个锁，增加并行度，从而降低锁竞争。**它的思想也是用空间来换时间；
+**它的思想是将物理上的一个锁，拆成逻辑上的多个锁，增加并行度，从而降低锁竞争.** 它的思想也是用空间来换时间；
 
 java中很多数据结构都是采用这种方法提高并发操作的效率：
 
